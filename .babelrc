@@ -1,0 +1,15 @@
+{
+  "ignore": "//(build|node_modules)//",
+  "presets": [
+    [
+      "env",
+      {
+        "targets": {
+          "node": "9.3.0"
+        }
+      }
+    ],
+    "react"
+  ],
+  "plugins": ["transform-object-rest-spread"]
+}

@@ -4,7 +4,7 @@ import thunk from "redux-thunk";
 import { routerMiddleware } from "react-router-redux";
 
 import history from "./history";
-import rootReducer from "./reducers";
+import rootReducer from "../reducers";
 
 const middleware = composeWithDevTools(
   applyMiddleware(thunk, routerMiddleware(history))
