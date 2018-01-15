@@ -1,6 +1,19 @@
 import React from "react";
 import { render } from "react-dom";
 
-import AppContainer from "./client/index";
+import { Provider } from "react-redux";
+import { BrowserRouter as Router } from "react-router-dom";
 
-render(<AppContainer />, document.getElementById("root"));
+import createStore from "./store";
+import App from "./App";
+
+const store = createStore();
+
+render(
+  <Provider store={store}>
+    <Router>
+      <App />
+    </Router>
+  </Provider>,
+  document.getElementById("root")
+);
