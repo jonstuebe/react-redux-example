@@ -35,9 +35,7 @@ export function fetchData(url) {
       return axios
         .get(url)
         .then(response => {
-          setTimeout(() => {
-            dispatch(fetchSuccess(response.data));
-          }, 500);
+          dispatch(fetchSuccess(response.data));
         })
         .catch(err => {
           dispatch(fetchFailure(err.response));

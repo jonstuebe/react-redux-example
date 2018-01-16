@@ -1,8 +1,11 @@
 import * as types from "../constants/fetchData";
 
-const initialState = { data: [], loading: false };
+const initialState = {
+  data: [],
+  loading: false
+};
 
-export default function FetchData(state = initialState, action) {
+export default function fetchData(state = initialState, action) {
   switch (action.type) {
     case types.FETCH_SUCCESS:
       return {
@@ -16,7 +19,7 @@ export default function FetchData(state = initialState, action) {
       };
     case types.FETCH_STARTED:
       return {
-        ...initialState,
+        data: [],
         loading: true
       };
     case types.FETCH_RESET:

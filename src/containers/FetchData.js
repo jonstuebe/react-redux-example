@@ -31,7 +31,9 @@ class FetchData extends Component {
             ) : (
               <ul>
                 {response.data.map((item, index) => (
-                  <li key={index}>{item.label}</li>
+                  <li key={index}>
+                    <pre>{JSON.stringify(item, null, 2)}</pre>
+                  </li>
                 ))}
               </ul>
             )}

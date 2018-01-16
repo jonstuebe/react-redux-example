@@ -3,6 +3,7 @@ require("dotenv").config();
 
 const fs = require("await-fs");
 const path = require("path");
+const axios = require("axios");
 
 const Koa = require("koa");
 const Router = require("koa-router");
@@ -27,9 +28,25 @@ const getTemplate = async () => {
 };
 
 const catchAllRoute = async ctx => {
-  const template = await getTemplate();
-  const markup = loader(ctx.request.url, {});
-  ctx.body = template.replace("{{SSR}}", markup);
+  let initialState = {};
+  let template = await getTemplate();
+
+  const users = await axios
+    .get("https://jsonplaceholder.typicode.com/users")
+    .then(response => response.data);
+
+  initialState.fetchData = {};
+  initialState.fetchData.data = users;
+
+  initialState.counter = 3;
+
+  const { markup, state } = loader(initialState, ctx.request.url, {});
+  template = template.replace("{{ SSR }}", markup);
+  template = template.replace(
+    "{{ SSR_STATE }}",
+    JSON.stringify(state).replace(/</g, "\\u003c")
+  );
+  ctx.body = template;
 };
 
 router.get("/", catchAllRoute);

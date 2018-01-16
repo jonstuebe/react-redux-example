@@ -6,14 +6,19 @@ import { StaticRouter as Router } from "react-router-dom";
 import createStore from "../src/store";
 import App from "../src/App";
 
-const store = createStore();
-
-export default (location = "", context = {}) => {
-  return ReactDOMServer.renderToString(
+export default (initialState = {}, location = "", context = {}) => {
+  const store = createStore(initialState);
+  const markup = ReactDOMServer.renderToString(
     <Provider store={store}>
       <Router location={location} context={context}>
         <App />
       </Router>
     </Provider>
   );
+  const state = store.getState();
+
+  return {
+    markup,
+    state
+  };
 };
