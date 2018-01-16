@@ -41,10 +41,15 @@ const catchAllRoute = async ctx => {
   initialState.counter = 3;
 
   const { markup, state } = loader(initialState, ctx.request.url, {});
-  template = template.replace("{{ SSR }}", markup);
   template = template.replace(
-    "{{ SSR_STATE }}",
-    JSON.stringify(state).replace(/</g, "\\u003c")
+    /<div id=\"root\"><\/div>/,
+    `<div id="root">${markup}</div>
+    <script>
+      window.__PRELOADED_STATE__ = ${JSON.stringify(state).replace(
+        /</g,
+        "\\u003c"
+      )}
+    </script>`
   );
   ctx.body = template;
 };
